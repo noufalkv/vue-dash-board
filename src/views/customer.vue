@@ -1,3 +1,4 @@
+
 <template>
   <div class="about" >
      <Navbar/>
@@ -76,6 +77,58 @@
              </v-layout> 
               <v-divider> </v-divider>
          </v-card>
+
+
+
+ 
+            <v-card flat v-for="user in users" :key="user.title"> 
+
+           <v-layout  >     
+         <v-flex xs2 sm4 md2 class="pa-3"> 
+          <div>Name: </div> <div>{{ user.name }} </div>  
+         </v-flex> 
+
+        <v-flex xs2 sm4 md2 class="pa-3"> 
+          <div>Username: </div> <div>{{user.username }} </div>  
+         </v-flex> 
+
+         <v-flex xs2 sm4 md2 class="pa-3"> 
+          <div>Emal: </div> <div>{{ user.email }} </div>  
+         </v-flex> 
+
+         <v-flex xs2 sm4 md2 class="pa-3"> 
+          <div>Phone: </div> <div>{{ user.phone }} </div>  
+         </v-flex> 
+
+
+
+          
+           
+ <v-flex xs2 sm4 md2 class="pa-3"> 
+           <div class="addresss">     
+          <div>Address :</div> <div>
+             {{ user.address.street }} </div> 
+               <div> {{ user.address.suite }} </div> 
+               <div> {{ user.address.city }} </div> 
+         </div>
+ </v-flex> 
+
+ <v-flex xs2 sm4 md2 class="pa-3"> 
+        <div class="company">  
+         <div>Company : </div> <div>{{  user.company.name }} </div> 
+               <div> {{ user.address.suite }} </div> 
+               <div> {{ user.address.city }} </div> 
+         </div> 
+ </v-flex> 
+
+               </v-layout> 
+               <v-divider> </v-divider>  <v-divider> </v-divider>  <v-divider> </v-divider>  <v-divider> </v-divider>
+         </v-card>
+
+
+
+
+
         
     </v-container>
     </div>
@@ -85,6 +138,9 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import Edit from '@/components/edit.vue'
+
+ 
+
 // @ is an alias to /src
 //import HelloWorld from '@/components/HelloWorld.vue'
 
@@ -92,7 +148,8 @@ export default {
     components: { Navbar, Edit},
    data(){
      return{
-        
+        users: [],
+        error: [],
         projects: [
          { name: 'Noufal', company: 'John doe', email: 'noufalv@gmail.com', status: 'active', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!'},
          { name: 'John doe', company: 'The Net Ninja', email: 'abcd@gmail.com', status: 'inactive', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!'},
@@ -103,12 +160,23 @@ export default {
          ]
      }
    },
-
+       mounted: function() {
+        this.axios.get('https://jsonplaceholder.typicode.com/users')
+            .then(response => {
+              this.users = response.data;
+              //console.log(response);
+            })
+            .catch(error => {
+               error;
+            });
+      },
 
    methods:{
      sortBy(prop){
        this.projects.sort((a,b)=> a[prop] < b[prop] ? -1 : 1  )
      }
+
+
    }
 }
 </script>

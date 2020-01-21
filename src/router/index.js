@@ -5,8 +5,10 @@ import Dashboard from '../views/dashboard.vue'
 import Customer from '../views/customer.vue'
 import Settings from '../views/settings.vue'
 import Chart from '../views/chart.vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
-
+Vue.use(VueAxios, axios),
 Vue.use(VueRouter)
 
 const routes = [
